@@ -1,5 +1,5 @@
 import SearchBar from "@/components/SearchBar";
-import { Search } from "lucide-react";
+
 
 export default function Create() {
     return (
