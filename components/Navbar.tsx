@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 export default function Navbar() {
   return (
-    <div className="w-full h-[50px] justify-between items-center p-8 flex bg-amber-100">
+    <div className="w-full h-[50px] justify-between items-center p-8 flex">
       <p className="text-2xl font-bold">YCDirectory</p>
       <div className="flex space-x-2">
         <ModeToggle />
