@@ -7,7 +7,7 @@ import { Send } from "lucide-react";
 
 export default function Create() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <div className="w-full py-12 flex justify-center items-center">
         <Image
           src="/Frame 74.png"
@@ -32,7 +32,7 @@ export default function Create() {
               type="text"
               id="title"
               placeholder="Title"
-              className="rounded-xl h-12"
+              className="rounded-xl h-12 placeholder:opacity-40"
             />
           </div>
 
@@ -46,7 +46,7 @@ export default function Create() {
             <Textarea
               id="description"
               placeholder="Short description of your startup idea"
-              className="rounded-xl min-h-[120px] resize-none"
+              className="rounded-xl h-15 placeholder:opacity-40 resize-none"
             />
           </div>
 
@@ -61,7 +61,37 @@ export default function Create() {
               type="text"
               id="category"
               placeholder="Choose a category (e.g., Tech, Health, Education, etc.)"
-              className="rounded-xl h-12"
+              className="rounded-xl h-12 placeholder:opacity-40"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label
+              htmlFor="file"
+              className="text-sm font-semibold uppercase tracking-wide"
+            >
+              Image link
+            </Label>
+            <Input
+              type="text"
+              id="link"
+              placeholder="Paste a link to your demo or promotional media"
+              className="rounded-xl h-12 placeholder:opacity-40"
+            />
+          </div>
+
+          {/*TODO: RTE editor */}
+          <div className="space-y-2">
+            <Label
+              htmlFor="pitch"
+              className="text-sm font-semibold uppercase tracking-wide"
+            >
+              pitch
+            </Label>
+            <Textarea
+              id="pitch"
+              placeholder="Briefly describe your idea and what problem it solves"
+              className="rounded-xl min-h-[200px] placeholder:opacity-40"
             />
           </div>
 
