@@ -2,6 +2,7 @@ import SearchBar from "@/components/SearchBar";
 import PitchCard from "@/components/PitchCard";
 import Image from "next/image";
 
+import SignIn from '../components/sign-in';
 export default function Home() {
   return (
     <div className="w-full mx-auto h-screen">
