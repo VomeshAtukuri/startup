@@ -6,7 +6,10 @@ import { data } from "@/mockdata";
 export default function Home() {
   return (
     <div className="w-full mx-auto h-screen">
-      <div className="w-full mx-auto justify-center items-center flex flex-col h-[350px] gap-4" style ={{backgroundImage: "url('/HomeBg.png')"}}>
+      <div
+        className="w-full mx-auto justify-center items-center flex flex-col h-[350px] gap-4"
+        style={{ backgroundImage: "url('/HomeBg.png')" }}
+      >
         <Image src="/Tag.png" alt="Vercel Logo" width={200} height={50} />
         <h1 className="text-3xl font-bold text-center">
           Welcome to Pitch Startup
@@ -16,10 +19,13 @@ export default function Home() {
         </p>
         <SearchBar />
       </div>
-      <div className="px-8 py-5 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {data.map((pitch, index) => (
-          <PitchCard pitch={pitch} key={index}/>
-        ))}
+      <div className="px-8 py-5 space-y-2 flex flex-col">
+        <p className="text-lg font-bold">Recommended Startups</p>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {data.map((pitch, index) => (
+            <PitchCard pitch={pitch} key={index} />
+          ))}
+        </div>
       </div>
     </div>
   );
