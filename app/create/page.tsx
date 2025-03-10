@@ -4,11 +4,12 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send } from "lucide-react";
+import { babelIncludeRegexes } from "next/dist/build/webpack-config";
 
 export default function Create() {
   return (
     <div className="min-h-screen">
-      <div className="w-full py-12 flex justify-center items-center">
+      <div className="w-full h-60 flex justify-center items-center" style={{backgroundImage: "url('/HomeBg.png')" }} >
         <Image
           src="/Frame 74.png"
           alt="Logo"
