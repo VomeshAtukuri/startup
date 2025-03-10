@@ -1,14 +1,57 @@
+"use client";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send } from "lucide-react";
+import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+interface FormData {
+  title: string;
+  description: string;
+  category: string;
+  link: string;
+  pitch: string;
+  userid: string;
+}
 
 export default function Create() {
+  const {data:session, status} = useSession();
+  if(status === "unauthenticated") return redirect("/api/auth/signin");
+  const [formData, setFormData] = useState<FormData>({
+    title: "",
+    description: "",
+    category: "",
+    link: "",
+    pitch: "",
+    userid: session?.user?.id || "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("formdata", formData);
+    setFormData({
+      title: "",
+      description: "",
+      category: "",
+      link: "",
+      pitch: "",
+      userid: session?.user?.id || "",
+    });
+  };
+
   return (
     <div className="min-h-screen">
-      <div className="w-full py-12 flex justify-center items-center">
+      <div
+        className="w-full h-60 flex justify-center items-center"
+        style={{ backgroundImage: "url('/HomeBg.png')" }}
+      >
         <Image
           src="/Frame 74.png"
           alt="Logo"
@@ -20,7 +63,7 @@ export default function Create() {
       </div>
 
       <div className="container max-w-xl mx-auto px-4 py-12">
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <Label
               htmlFor="title"
@@ -31,7 +74,10 @@ export default function Create() {
             <Input
               type="text"
               id="title"
+              name="title"
               placeholder="Title"
+              value={formData.title}
+              onChange={handleChange}
               className="rounded-xl h-12 placeholder:opacity-40"
             />
           </div>
@@ -44,7 +90,9 @@ export default function Create() {
               Description
             </Label>
             <Textarea
-              id="description"
+              onChange={handleChange}
+              name="description"
+              value={formData.description}
               placeholder="Short description of your startup idea"
               className="rounded-xl h-15 placeholder:opacity-40 resize-none"
             />
@@ -60,6 +108,9 @@ export default function Create() {
             <Input
               type="text"
               id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
               placeholder="Choose a category (e.g., Tech, Health, Education, etc.)"
               className="rounded-xl h-12 placeholder:opacity-40"
             />
@@ -67,7 +118,7 @@ export default function Create() {
 
           <div className="space-y-2">
             <Label
-              htmlFor="file"
+              htmlFor="link"
               className="text-sm font-semibold uppercase tracking-wide"
             >
               Image link
@@ -75,21 +126,26 @@ export default function Create() {
             <Input
               type="text"
               id="link"
+              value={formData.link}
+              name="link"
+              onChange={handleChange}
               placeholder="Paste a link to your demo or promotional media"
               className="rounded-xl h-12 placeholder:opacity-40"
             />
           </div>
 
-          {/*TODO: RTE editor */}
           <div className="space-y-2">
             <Label
               htmlFor="pitch"
               className="text-sm font-semibold uppercase tracking-wide"
             >
-              pitch
+              Pitch
             </Label>
             <Textarea
+              onChange={handleChange}
+              value={formData.pitch}
               id="pitch"
+              name="pitch"
               placeholder="Briefly describe your idea and what problem it solves"
               className="rounded-xl min-h-[200px] placeholder:opacity-40"
             />
@@ -103,3 +159,4 @@ export default function Create() {
     </div>
   );
 }
+
