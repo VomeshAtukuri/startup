@@ -14,9 +14,13 @@ export default function Navbar() {
         <Button variant="ghost" className="border-none" asChild>
           <Link href="/create">Create</Link>
         </Button>
-        <Button variant="ghost" className="border-none">
+        <Button
+          variant="ghost"
+          className="border-2 border-transparent hover:border-red-500 transition-all duration-200"
+        >
           Sign In
         </Button>
+
         <Link href={`/profile/${user_id}`}>
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
