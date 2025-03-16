@@ -65,7 +65,7 @@ export default function PitchCard({pitch} : {pitch: any}) {
       <CardFooter className="flex justify-between items-center">
         <p>{pitch.category}</p>
         <Button className="border-none rounded-3xl" asChild>
-          <Link href="/create">Details</Link>
+          <Link href={`/pitch/${pitch.id}`}>Details</Link>
         </Button>
       </CardFooter>
     </Card>

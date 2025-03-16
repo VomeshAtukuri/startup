@@ -20,7 +20,6 @@ export default function Navbar() {
         >
           Sign In
         </Button>
-
         <Link href={`/profile/${user_id}`}>
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
