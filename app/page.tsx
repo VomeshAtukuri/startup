@@ -2,10 +2,15 @@ import SearchBar from "@/components/SearchBar";
 import PitchCard from "@/components/PitchCard";
 import Image from "next/image";
 import { data } from "@/mockdata";
-
-export default function Home() {
+import SignIn from '../components/sign-in';
+import { auth } from "@/auth";
+export default async function Home() {
+  const session = await auth();
   return (
     <div className="w-full mx-auto h-screen">
+      <pre>
+      {JSON.stringify(session?.user, null, 2)}
+      </pre>
       <div
         className="w-full mx-auto justify-center items-center flex flex-col h-[350px] gap-4"
         style={{ backgroundImage: "url('/HomeBg.png')" }}

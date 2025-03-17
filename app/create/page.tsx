@@ -6,20 +6,27 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send } from "lucide-react";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 interface FormData {
   title: string;
   description: string;
   category: string;
   link: string;
   pitch: string;
+  userid: string;
 }
+
 export default function Create() {
+  const {data:session, status} = useSession();
+  if(status === "unauthenticated") return redirect("/api/auth/signin");
   const [formData, setFormData] = useState<FormData>({
     title: "",
     description: "",
     category: "",
     link: "",
     pitch: "",
+    userid: session?.user?.id || "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -35,6 +42,7 @@ export default function Create() {
       category: "",
       link: "",
       pitch: "",
+      userid: session?.user?.id || "",
     });
   };
 
