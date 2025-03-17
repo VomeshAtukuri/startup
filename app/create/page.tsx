@@ -20,8 +20,7 @@ interface FormData {
 }
 
 export default function Create() {
-  const { data: session, status } = useSession();
-  if (status === "unauthenticated") return redirect("/api/auth/signin");
+  const { status } = useSession();
   const [formData, setFormData] = useState<FormData>({
     title: "",
     description: "",
@@ -29,7 +28,8 @@ export default function Create() {
     link: "",
     pitch: "",
   });
-
+  
+  if (status === "unauthenticated") return redirect("/api/auth/signin");
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {

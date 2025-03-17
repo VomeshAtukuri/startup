@@ -2,7 +2,7 @@ import SearchBar from "@/components/SearchBar";
 import PitchCard from "@/components/PitchCard";
 import Image from "next/image";
 import { data } from "@/mockdata";
-import SignIn from '../components/sign-in';
+// import SignIn from '../components/sign-in';
 import { auth } from "@/auth";
 export default async function Home() {
   const session = await auth();

@@ -11,7 +11,20 @@ import { Calendar, Eye } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
-//Mock data
+
+//title,description,category,link,pitch,userid,created,views,id
+interface PitchCardProps {
+  title: string;
+  description: string;
+  category: string;
+  link: string;
+  pitch: string;
+  userid: string;
+  created: string;
+  views: number;
+  id: string;
+}
+
 const formatDate = (dateString: string) => {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -21,13 +34,13 @@ const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-export default function PitchCard({pitch} : {pitch: any}) {
+export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
   return (
     <Card className="max-w-md mx-auto rounded-3xl py-5 px-4">
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           <p className="flex items-center gap-1.5">
-            <Calendar className="size-5 text-pink-600"/>
+            <Calendar className="size-5 text-pink-600" />
             {formatDate(pitch.created)}
           </p>
           <div className="inline-flex items-center">
@@ -55,7 +68,7 @@ export default function PitchCard({pitch} : {pitch: any}) {
           </CardDescription>
         </div>
         <Image
-          src={pitch.image}
+          src={pitch.link}
           alt="Pitch Image"
           width={400}
           height={200}
