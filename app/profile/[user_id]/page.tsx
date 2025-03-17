@@ -16,10 +16,10 @@ export default async function Profile() {
     <div className="container mx-auto flex justify-center items-center h-screen">
       <div className="flex flex-col p-4">
         <p className="font-bold text-2xl">{data?.message}</p>
+        <pre>{JSON.stringify(session, null, 2)}</pre>
         {/* <p>{data?.email}</p>
         <p>{data?.bio}</p> */}
       </div>
     </div>
   );
 }
-

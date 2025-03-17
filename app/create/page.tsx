@@ -8,41 +8,52 @@ import { Send } from "lucide-react";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
+
 interface FormData {
   title: string;
   description: string;
   category: string;
   link: string;
   pitch: string;
-  userid: string;
+  // userid: string;
 }
 
 export default function Create() {
-  const {data:session, status} = useSession();
-  if(status === "unauthenticated") return redirect("/api/auth/signin");
+  const { data: session, status } = useSession();
+  if (status === "unauthenticated") return redirect("/api/auth/signin");
   const [formData, setFormData] = useState<FormData>({
     title: "",
     description: "",
     category: "",
     link: "",
     pitch: "",
-    userid: session?.user?.id || "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("formdata", formData);
+    const response = await fetch("/api/pitch", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await response.json();
+    toast.success(data.message);
     setFormData({
       title: "",
       description: "",
       category: "",
       link: "",
       pitch: "",
-      userid: session?.user?.id || "",
     });
   };
 
@@ -159,4 +170,3 @@ export default function Create() {
     </div>
   );
 }
-

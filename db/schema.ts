@@ -1,10 +1,7 @@
 import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import {
-  boolean,
-  primaryKey,
-} from "drizzle-orm/pg-core"
-import type { AdapterAccountType } from "next-auth/adapters"
- 
+import { boolean, primaryKey } from "drizzle-orm/pg-core";
+import type { AdapterAccountType } from "next-auth/adapters";
+
 export const users = pgTable("user", {
   id: text("id")
     .primaryKey()
@@ -13,8 +10,8 @@ export const users = pgTable("user", {
   email: text("email").unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
-})
- 
+});
+
 export const accounts = pgTable(
   "account",
   {
@@ -39,16 +36,16 @@ export const accounts = pgTable(
       }),
     },
   ]
-)
- 
+);
+
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").primaryKey(),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
-})
- 
+});
+
 export const verificationTokens = pgTable(
   "verificationToken",
   {
@@ -63,8 +60,8 @@ export const verificationTokens = pgTable(
       }),
     },
   ]
-)
- 
+);
+
 export const authenticators = pgTable(
   "authenticator",
   {
@@ -86,22 +83,21 @@ export const authenticators = pgTable(
       }),
     },
   ]
-)
+);
 
-export const usersTable = pgTable("users", {
-  id: integer().primaryKey(),
-  name: text().notNull(),
-  email: text().notNull().unique(),
-});
-
+//title,description,category,link,pitch,userid,created,views,id
 export const pitchesTable = pgTable("pitches", {
-  id: integer().primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   title: text().notNull(),
-  image: text().notNull(),
   description: text().notNull(),
+  category: text().notNull(),
+  imagesrc: text().notNull(),
+  pitch: text().notNull(),
   created: timestamp().notNull(),
   views: integer().notNull(),
-  userid: integer()
+  userid: text()
     .notNull()
-    .references(() => usersTable.id, { onDelete: "cascade" }),
+    .references(() => users.id, { onDelete: "cascade" }),
 });
