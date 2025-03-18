@@ -11,7 +11,7 @@ export default async function Home() {
       <pre>
       {JSON.stringify(session?.user, null, 2)}
       </pre>
-      <div
+      {/* <div
         className="w-full mx-auto justify-center items-center flex flex-col h-[350px] gap-4"
         style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
@@ -31,7 +31,7 @@ export default async function Home() {
             <PitchCard pitch={pitch} key={index} />
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

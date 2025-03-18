@@ -5,6 +5,7 @@ import Link from "next/link";
 import { signIn, signOut, auth } from "@/auth";
 export default async function Navbar() {
   const session = await auth();
+  const userid = session?.user?.id;
   return (
     <div className="w-full h-[50px] justify-between items-center p-8 flex">
       <Link className="text-2xl font-bold" href="/">
@@ -42,7 +43,7 @@ export default async function Navbar() {
             Login
           </Button>
         )}
-        <Link href={`/profile/${session?.user?.id}`}>
+        <Link href={`/profile/${userid}`}>
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>
