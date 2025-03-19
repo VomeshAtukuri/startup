@@ -4,7 +4,7 @@ import { pitchesTable,users } from "@/db/schema";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+import { auth } from "@/auth";
 const formatDate = (dateString: Date) => {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -19,6 +19,7 @@ export default async function PitchDetails({
 }: {
   params: Promise<{ pitch_id: string }>;
 }) {
+  const session = await auth();
   const { pitch_id } = await params;
   const pitch = await db
     .select({
@@ -38,8 +39,11 @@ export default async function PitchDetails({
     .innerJoin(users, eq(pitchesTable.userid, users.id))  
     .where(eq(pitchesTable.id, pitch_id))
     .then((res) => res[0]);
-  
-  await db.update(pitchesTable).set({ views: pitch.views + 1 }).where(eq(pitchesTable.id, pitch_id));
+    
+  if (session?.user?.id !== pitch.userid) {
+    await db.update(pitchesTable).set({ views: pitch.views + 1 }).where(eq(pitchesTable.id, pitch_id));
+  }
+
   return (
     <div className="min-h-screen">
       {/* <div
