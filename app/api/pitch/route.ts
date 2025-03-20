@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   return new Response(JSON.stringify({ message: "Pitch Successfully added" }));
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   const pitches = await db
     .select({
       id: pitchesTable.id,
@@ -36,7 +36,8 @@ export async function GET(req: Request) {
       imagesrc: pitchesTable.imagesrc,
       created: pitchesTable.created,
       views: pitchesTable.views,
-      name: users.name
+      name: users.name,
+      userid: pitchesTable.userid
     })
     .from(pitchesTable)
     .innerJoin(users, eq(pitchesTable.userid, users.id));

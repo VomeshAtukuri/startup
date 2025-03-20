@@ -16,7 +16,6 @@ interface FormData {
   category: string;
   link: string;
   pitch: string;
-  // userid: string;
 }
 
 export default function Create() {
@@ -28,8 +27,12 @@ export default function Create() {
     link: "",
     pitch: "",
   });
-  
-  if (status === "unauthenticated") return redirect("/api/auth/signin");
+
+  if (status === "unauthenticated") {
+    const url = new URL(window.location.href);
+    url.searchParams.set("callbackUrl", window.location.href);
+    return redirect(`/api/auth/signin?${url.searchParams.toString()}/create`);
+  }
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
@@ -89,7 +92,7 @@ export default function Create() {
               placeholder="Title"
               value={formData.title}
               onChange={handleChange}
-              className="rounded-xl h-12 placeholder:opacity-40"
+              className="rounded-xl h-12"
             />
           </div>
 
@@ -105,7 +108,7 @@ export default function Create() {
               name="description"
               value={formData.description}
               placeholder="Short description of your startup idea"
-              className="rounded-xl h-15 placeholder:opacity-40 resize-none scrollbar"
+              className="rounded-xl h-15 resize-none scrollbar"
             />
           </div>
 
@@ -123,7 +126,7 @@ export default function Create() {
               value={formData.category}
               onChange={handleChange}
               placeholder="Choose a category (e.g., Tech, Health, Education, etc.)"
-              className="rounded-xl h-12 placeholder:opacity-40"
+              className="rounded-xl h-12"
             />
           </div>
 
@@ -141,7 +144,7 @@ export default function Create() {
               name="link"
               onChange={handleChange}
               placeholder="Paste a link to your demo or promotional media"
-              className="rounded-xl h-12 placeholder:opacity-40"
+              className="rounded-xl h-12"
             />
           </div>
 
@@ -158,7 +161,7 @@ export default function Create() {
               id="pitch"
               name="pitch"
               placeholder="Briefly describe your idea and what problem it solves"
-              className="rounded-xl min-h-[200px] placeholder:opacity-40"
+              className="rounded-xl min-h-[200px]"
             />
           </div>
 

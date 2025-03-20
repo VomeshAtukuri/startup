@@ -22,6 +22,7 @@ interface PitchCardProps {
   views: number;
   id: string;
   name: string;
+  userid: string;
 }
 
 const formatDate = (dateString: string) => {
@@ -35,7 +36,7 @@ const formatDate = (dateString: string) => {
 
 export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
   return (
-    <Card className="w-[320px] mx-auto rounded-3xl border-2 border-black border-r-[6px] border-b-[6px] transition-transform transform hover:scale-105 duration-300 dark:border-white">
+    <Card className="w-[320px] mx-auto rounded-3xl border-2 border-black border-r-[6px] border-b-[6px] transition-transform transform hover:scale-102 duration-300 dark:border-white">
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           <p className="flex items-center gap-1.5">
@@ -54,10 +55,12 @@ export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
             <p className="text-sm">{pitch.name}</p>
             <p className="font-semibold text-2xl">{pitch.title}</p>
           </span>
-          <Avatar className="size-10">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <Link href={`/profile/${pitch.userid}`}>
+            <Avatar className="size-10 ">
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback className="animate-pulse"></AvatarFallback>
+            </Avatar>
+          </Link>
         </div>
         <div>
           <CardDescription>
@@ -66,6 +69,7 @@ export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
               : pitch.description}
           </CardDescription>
         </div>
+
         <Image
           src={pitch.imagesrc}
           alt="Pitch Image"

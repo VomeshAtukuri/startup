@@ -10,13 +10,14 @@ interface Pitch{
   created: string,
   views: number,
   name: string,
+  userid: string
 }
 export default async function Home() {
   const result = await fetch("http://localhost:3000/api/pitch");
   const data = await result.json();
   return (
     <div className="w-full mx-auto h-screen">
-      <div
+      {/* <div
         className="w-full mx-auto justify-center items-center flex flex-col h-[350px] gap-4"
         style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
@@ -28,7 +29,7 @@ export default async function Home() {
           Submit Ideas, Vote on Pitches, and Get Noticed in Virtual Competitions
         </p>
         <SearchBar />
-      </div>
+      </div> */}
       <div className="px-12 py-5 space-y-2 flex flex-col">
         <p className="text-xl font-bold mb-3">Recommended Startups</p>
         <div className="grid grid-cols-1 gap-x-0 gap-y-5 md:grid-cols-2 lg:grid-cols-4">
