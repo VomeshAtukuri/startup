@@ -17,12 +17,11 @@ interface PitchCardProps {
   title: string;
   description: string;
   category: string;
-  link: string;
-  pitch: string;
-  userid: string;
+  imagesrc: string;
   created: string;
   views: number;
   id: string;
+  name: string;
 }
 
 const formatDate = (dateString: string) => {
@@ -36,23 +35,23 @@ const formatDate = (dateString: string) => {
 
 export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
   return (
-    <Card className="max-w-md mx-auto rounded-3xl py-5 px-4">
+    <Card className="w-[320px] mx-auto rounded-3xl border-2 border-black border-r-[6px] border-b-[6px] transition-transform transform hover:scale-105 duration-300 dark:border-white">
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           <p className="flex items-center gap-1.5">
             <Calendar className="size-5 text-pink-600" />
             {formatDate(pitch.created)}
           </p>
-          <div className="inline-flex items-center">
-            <Eye className="mr-1 size-5 text-pink-600" />
-            <p>{pitch.views}</p>
-          </div>
+          <p className="inline-flex items-center gap-1.5">
+            <Eye className="size-5 text-pink-600" />
+            {pitch.views}
+          </p>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <span>
-            <p className="text-sm">{pitch.userid}</p>
+            <p className="text-sm">{pitch.name}</p>
             <p className="font-semibold text-2xl">{pitch.title}</p>
           </span>
           <Avatar className="size-10">
@@ -63,12 +62,12 @@ export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
         <div>
           <CardDescription>
             {pitch.description.length > 100
-              ? `${pitch.description.substring(0, 97)}...`
+              ? `${pitch.description.substring(0, 50)}...`
               : pitch.description}
           </CardDescription>
         </div>
         <Image
-          src={pitch.link}
+          src={pitch.imagesrc}
           alt="Pitch Image"
           width={400}
           height={200}

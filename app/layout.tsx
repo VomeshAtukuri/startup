@@ -42,7 +42,7 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
          </SessionProvider>
-        <Toaster />
+        <Toaster richColors closeButton/>
       </body>
     </html>
   );

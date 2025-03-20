@@ -1,15 +1,18 @@
 import Image from "next/image";
 import { Eye, Pen } from "lucide-react";
+import { pitchesTable } from "@/db/schema";
 interface ProfileComponentProps {
   name: string;
   image: string;
   email: string;
+  pitchesLength: number;
 }
 
 export default function ProfileCard({
   name,
   image,
   email,
+  pitchesLength,
 }: ProfileComponentProps) {
   return (
     <div className="flex flex-col items-center">
@@ -55,7 +58,7 @@ export default function ProfileCard({
 
             <div className="flex items-center gap-2">
               <Pen className="text-xl opacity-80" />
-              <span className="text-lg font-semibold">5</span>
+              <span className="text-lg font-semibold">{pitchesLength}</span>
             </div>
           </div>
         </div>
@@ -63,3 +66,6 @@ export default function ProfileCard({
     </div>
   );
 }
+
+
+

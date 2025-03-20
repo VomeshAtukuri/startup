@@ -1,4 +1,4 @@
-export const data = Array.from({ length: 12 }, (_, index) => ({
+export const data = Array.from({ length: 1 }, (_, index) => ({
   created: `2023-01-${String(index + 1).padStart(2, '0')}`,
   views: Math.floor(Math.random() * 1000),
   userid: `User ${index + 1}`,

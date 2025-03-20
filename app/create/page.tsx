@@ -59,7 +59,7 @@ export default function Create() {
 
   return (
     <div className="min-h-screen">
-      <div
+      {/* <div
         className="w-full h-60 flex justify-center items-center"
         style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
@@ -71,7 +71,7 @@ export default function Create() {
           className="object-contain"
           priority
         />
-      </div>
+      </div> */}
 
       <div className="container max-w-xl mx-auto px-4 py-12">
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -105,7 +105,7 @@ export default function Create() {
               name="description"
               value={formData.description}
               placeholder="Short description of your startup idea"
-              className="rounded-xl h-15 placeholder:opacity-40 resize-none"
+              className="rounded-xl h-15 placeholder:opacity-40 resize-none scrollbar"
             />
           </div>
 

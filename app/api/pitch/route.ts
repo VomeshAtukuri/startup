@@ -1,6 +1,7 @@
 import { db } from "@/db";
-import { pitchesTable } from "@/db/schema";
+import { pitchesTable, users } from "@/db/schema";
 import { auth } from "@/auth";
+import { eq } from "drizzle-orm"
 export async function POST(req: Request) {
   const session = await auth();
   const { title, description, category, link, pitch } = await req.json();
@@ -22,5 +23,22 @@ export async function POST(req: Request) {
     userid: session.user.id,
   });
 
-  return new Response(JSON.stringify({ message: "success" }));
+  return new Response(JSON.stringify({ message: "Pitch Successfully added" }));
+}
+
+export async function GET(req: Request) {
+  const pitches = await db
+    .select({
+      id: pitchesTable.id,
+      title: pitchesTable.title,
+      description: pitchesTable.description,
+      category: pitchesTable.category,
+      imagesrc: pitchesTable.imagesrc,
+      created: pitchesTable.created,
+      views: pitchesTable.views,
+      name: users.name
+    })
+    .from(pitchesTable)
+    .innerJoin(users, eq(pitchesTable.userid, users.id));
+  return new Response(JSON.stringify(pitches))
 }

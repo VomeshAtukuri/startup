@@ -9,6 +9,7 @@ export async function GET(
   const { user_id } = await params;
   const userData = await db.select().from(users).where(eq(users.id, user_id));
   const pitches = await db.select({
+    id: pitchesTable.id,
     title: pitchesTable.title,
     description: pitchesTable.description,
     category: pitchesTable.category,

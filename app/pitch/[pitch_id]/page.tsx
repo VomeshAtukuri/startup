@@ -68,12 +68,12 @@ export default async function PitchDetails({
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
             <Avatar className="size-10">
-              <AvatarImage src={pitch.image} />
+              <AvatarImage src={pitch.image || "/placeholder.svg"} />
               <AvatarFallback>AD</AvatarFallback>
             </Avatar>
             <div>
               <h3 className="text-xl font-bold">{pitch.name} - {pitch.title}</h3>
-              <p className="text-gray-600">@adrianhajdin</p>
+              <p className="text-gray-600">@{pitch.email?.trim().split("@")[0]}</p>
             </div>
           </div>
           <Badge className="text-sm">

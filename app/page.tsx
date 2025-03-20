@@ -1,17 +1,22 @@
 import SearchBar from "@/components/SearchBar";
 import PitchCard from "@/components/PitchCard";
 import Image from "next/image";
-import { data } from "@/mockdata";
-// import SignIn from '../components/sign-in';
-import { auth } from "@/auth";
+interface Pitch{
+  id: string,
+  title: string,
+  description: string,
+  category: string,
+  imagesrc: string,
+  created: string,
+  views: number,
+  name: string,
+}
 export default async function Home() {
-  const session = await auth();
+  const result = await fetch("http://localhost:3000/api/pitch");
+  const data = await result.json();
   return (
     <div className="w-full mx-auto h-screen">
-      <pre>
-      {JSON.stringify(session?.user, null, 2)}
-      </pre>
-      {/* <div
+      <div
         className="w-full mx-auto justify-center items-center flex flex-col h-[350px] gap-4"
         style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
@@ -24,14 +29,14 @@ export default async function Home() {
         </p>
         <SearchBar />
       </div>
-      <div className="px-8 py-5 space-y-2 flex flex-col">
-        <p className="text-lg font-bold">Recommended Startups</p>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {data.map((pitch, index) => (
-            <PitchCard pitch={pitch} key={index} />
+      <div className="px-12 py-5 space-y-2 flex flex-col">
+        <p className="text-xl font-bold mb-3">Recommended Startups</p>
+        <div className="grid grid-cols-1 gap-x-0 gap-y-5 md:grid-cols-2 lg:grid-cols-4">
+          {data.map((pitch: Pitch, id: string ) => (
+            <PitchCard pitch={pitch} key={id} />
           ))}
         </div>
-      </div> */}
+      </div> 
     </div>
   );
 }
