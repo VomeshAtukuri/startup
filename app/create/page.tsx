@@ -29,9 +29,7 @@ export default function Create() {
   });
 
   if (status === "unauthenticated") {
-    const url = new URL(window.location.href);
-    url.searchParams.set("callbackUrl", window.location.href);
-    return redirect(`/api/auth/signin?${url.searchParams.toString()}/create`);
+    return redirect(`/api/auth/signin?callbackUrl=/create`);
   }
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -93,6 +91,7 @@ export default function Create() {
               value={formData.title}
               onChange={handleChange}
               className="rounded-xl h-12"
+              required
             />
           </div>
 
@@ -107,8 +106,9 @@ export default function Create() {
               onChange={handleChange}
               name="description"
               value={formData.description}
-              placeholder="Short description of your startup idea"
+              placeholder="Short description of your startup idea (atmost 20 words)"
               className="rounded-xl h-15 resize-none scrollbar"
+              required
             />
           </div>
 
@@ -127,6 +127,7 @@ export default function Create() {
               onChange={handleChange}
               placeholder="Choose a category (e.g., Tech, Health, Education, etc.)"
               className="rounded-xl h-12"
+              required
             />
           </div>
 
@@ -145,6 +146,7 @@ export default function Create() {
               onChange={handleChange}
               placeholder="Paste a link to your demo or promotional media"
               className="rounded-xl h-12"
+              required
             />
           </div>
 
@@ -162,6 +164,7 @@ export default function Create() {
               name="pitch"
               placeholder="Briefly describe your idea and what problem it solves"
               className="rounded-xl min-h-[200px]"
+              required
             />
           </div>
 

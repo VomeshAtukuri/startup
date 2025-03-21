@@ -46,7 +46,7 @@ export default async function PitchDetails({
 
   return (
     <div className="min-h-screen">
-      {/* <div
+      <div
         className="py-12 px-4 relative"
         style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
@@ -61,7 +61,7 @@ export default async function PitchDetails({
             {pitch.description}
           </p>
         </div>
-      </div> */}
+      </div>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
       <Image src={pitch.imagesrc} alt="Adrian Hajdin" width={1000} height={500}  className="mb-4"/>

@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 export default function SearchBar() {
   return (
     <div className="flex items-center justify-center relative">
-      <Input type="text" placeholder="Search Startup" className="p-5 w-100 h-10 rounded-3xl " />
+      <Input type="text" placeholder="Search Startup" className="p-5 w-100 h-10 rounded-3xl placeholder:text-white" />
       <Button size='icon' className="rounded-full absolute right-1 ">
           <Search/>
       </Button>
