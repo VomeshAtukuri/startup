@@ -22,6 +22,7 @@ interface PitchCardProps {
   views: number;
   id: string;
   name: string;
+  propic: string;
   userid: string;
 }
 
@@ -36,7 +37,7 @@ const formatDate = (dateString: string) => {
 
 export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
   return (
-    <Card className="w-[320px] mx-auto rounded-3xl border-2 border-black border-r-[6px] border-b-[6px] transition-transform transform hover:scale-102 duration-300 dark:border-white">
+    <Card className="w-[320px] mx-auto rounded-3xl border-2 border-black border-r-[6px] border-b-[6px] transition-transform transform hover:scale-102 duration-300 dark:border-white flex flex-col justify-between">
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           <p className="flex items-center gap-1.5">
@@ -49,23 +50,26 @@ export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
           </p>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2">
+
+      <CardContent className="flex-1 flex flex-col gap-2">
         <div className="flex justify-between items-center">
-          <span>
-            <p className="text-sm">{pitch.name}</p>
-            <p className="font-semibold text-2xl">{pitch.title}</p>
+          <span className="flex-1 min-h-[50px]">
+            <p className="text-sm min-h-[20px]">{pitch.name}</p>
+            <p className="font-semibold text-2xl min-h-[28px]">{pitch.title}</p>
           </span>
-          <Link href={`/profile/${pitch.userid}`}>
-            <Avatar className="size-10 ">
-              <AvatarImage src="https://github.com/shadcn.png" />
+          <Link href={`/profile/${pitch.userid}`} prefetch={false}>
+            <Avatar className="size-10">
+              <AvatarImage src={pitch.propic} />
               <AvatarFallback className="animate-pulse"></AvatarFallback>
             </Avatar>
           </Link>
         </div>
-        <div>
-          <CardDescription>
+
+    
+        <div className="flex-1">
+          <CardDescription className="min-h-[40px]">
             {pitch.description.length > 100
-              ? `${pitch.description.substring(0, 50)}...`
+              ? `${pitch.description.substring(0, 75)}...`
               : pitch.description}
           </CardDescription>
         </div>
@@ -78,12 +82,14 @@ export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
           className="w-full h-40 rounded-3xl object-cover border-black-500 border-2"
         />
       </CardContent>
+
       <CardFooter className="flex justify-between items-center">
         <p>{pitch.category}</p>
         <Button className="border-none rounded-3xl" asChild>
-          <Link href={`/pitch/${pitch.id}`}>Details</Link>
+          <Link href={`/pitch/${pitch.id}`} prefetch={false}>Details</Link>
         </Button>
       </CardFooter>
     </Card>
   );
 }
+

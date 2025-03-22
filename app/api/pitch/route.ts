@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   const { title, description, category, link, pitch } = await req.json();
 
   if (!session?.user?.id) {
-    return new Response(JSON.stringify({ message: "User not authenticated" }), {
+    return new Response(JSON.stringify({ message: "User Not Authenticated" }), {
       status: 401,
     });
   }
@@ -37,6 +37,7 @@ export async function GET() {
       created: pitchesTable.created,
       views: pitchesTable.views,
       name: users.name,
+      propic: users.image,
       userid: pitchesTable.userid
     })
     .from(pitchesTable)

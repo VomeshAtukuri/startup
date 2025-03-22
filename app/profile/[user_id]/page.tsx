@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/auth";
-
+import Link from "next/link";
 interface Pitch {
   id: string;
   title: string;
@@ -18,6 +18,7 @@ interface Pitch {
   email: string;
   image: string;
   userid: string;
+  propic: string;
 }
 export default async function Profile({
   params,
@@ -69,19 +70,19 @@ export default async function Profile({
             {data.pitches.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[80px] gap-y-4">
                 {data.pitches.map((pitch: Pitch, index: string) => (
-                  <div key={index} className="">
-                    <PitchCard pitch={pitch} />
-                  </div>
+                    <PitchCard pitch={{ ...pitch, propic: data.image }} />
                 ))}
               </div>
             ) : (
-              <div className="flex flex-col justify-center items-center py-12 px-6 border rounded-lg bg-muted/50 text-center">
+              <div className="flex flex-col justify-center items-center py-12 px-6 text-center">
                 <span className="text-6xl">📭</span>
                 <p className="text-muted-foreground mt-2">
                   No pitches available
                 </p>
-                <Button className="mt-4" variant="outline">
+                <Button className="mt-4" variant="outline" asChild>
+                  <Link href="/create">
                   Create Your First Pitch
+                  </Link>
                 </Button>
               </div>
             )}
@@ -90,6 +91,7 @@ export default async function Profile({
       </div>
     );
   } catch (error) {
+    console.log(error);
     return (
       <div className="container mx-auto flex flex-col justify-center items-center h-[calc(100vh-8rem)] p-4">
         <div className="max-w-md text-center bg-red-100 border border-red-300 rounded-lg shadow-lg p-6">

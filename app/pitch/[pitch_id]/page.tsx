@@ -51,7 +51,7 @@ export default async function PitchDetails({
         style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
         <div className="max-w-3xl mx-auto">
-          <div className="bg-amber-400 text-center py-1 px-4 w-fit mx-auto mb-2">
+          <div className="bg-[#FBE843] text-center py-1 px-4 w-fit mx-auto mb-2 rounded-2xl">
             <span className="font-medium">{formatDate(pitch.created)}</span>
           </div>
           <div className="bg-black text-white text-center w-fit mx-auto py-2 px-8 mb-2">
@@ -67,7 +67,7 @@ export default async function PitchDetails({
       <Image src={pitch.imagesrc} alt="Adrian Hajdin" width={1000} height={500}  className="mb-4"/>
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
-            <Avatar className="size-10">
+            <Avatar className="size-12">
               <AvatarImage src={pitch.image || "/placeholder.svg"} />
               <AvatarFallback>AD</AvatarFallback>
             </Avatar>
@@ -76,7 +76,7 @@ export default async function PitchDetails({
               <p className="text-gray-600">@{pitch.email?.trim().split("@")[0]}</p>
             </div>
           </div>
-          <Badge className="text-sm">
+          <Badge className="text-xs rounded-4xl">
             {pitch.category}
           </Badge>
         </div>

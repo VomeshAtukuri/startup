@@ -15,6 +15,7 @@ export default function ProfileCard({
   pitchesLength,
   totalViews,
 }: ProfileComponentProps) {
+  console.log(name,image,email);
   return (
     <div className="flex flex-col items-center">
       <div className="bg-white py-3 px-6 rounded-xl text-center border-2 border-black border-b-[6px] border-r-[4px] shadow-md -mb-7 z-10 dark:bg-gray-800 dark:border-white rotate-[2deg]">

@@ -60,7 +60,7 @@ export default function Create() {
 
   return (
     <div className="min-h-screen">
-      {/* <div
+      <div
         className="w-full h-60 flex justify-center items-center"
         style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
@@ -72,7 +72,7 @@ export default function Create() {
           className="object-contain"
           priority
         />
-      </div> */}
+      </div>
 
       <div className="container max-w-xl mx-auto px-4 py-12">
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -168,7 +168,7 @@ export default function Create() {
             />
           </div>
 
-          <Button type="submit" className="w-full rounded-xl h-12 mt-6">
+          <Button  type="submit" className="w-full rounded-3xl h-12 mt-6 border-[3px] border-black dark:border-white bg-[#EE2B69] hover:bg-[#EE2B69]">
             Submit Your Pitch <Send className="ml-2" />
           </Button>
         </form>

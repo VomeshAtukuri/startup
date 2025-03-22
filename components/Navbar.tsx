@@ -10,8 +10,9 @@ export default async function Navbar() {
   return (
     <div className="w-full h-[50px] justify-between items-center p-8 flex">
       <Link className="text-2xl font-bold" href="/" prefetch={false}>
-        Home
-        {/* PitchStartup */}
+        {/* Home */}
+        <span className="text-[#EF4444]">Pitch</span>
+        Startup
       </Link>
       <div className="flex space-x-2">
         <ModeToggle />
@@ -20,20 +21,20 @@ export default async function Navbar() {
           className="border-2 border-transparent hover:border-red-500 transition-all duration-200"
           asChild
         >
-          <Link href="/create" prefetch={false}>Create</Link>
+          <Link href="/create" prefetch={false}>
+            Create
+          </Link>
         </Button>
         {session ? (
-          // <Button
-          //   variant="ghost"
-          //   className="border-2 border-transparent hover:border-red-500 transition-all duration-200"
-          //   onClick={async () => {
-          //     "use server";
-          //     await signOut();
-          //   }}
-          // >
-          //   Logout
-          // </Button>
-          <DialogButton/>
+          <>
+            <DialogButton />
+            <Link href={`/profile/${userid}`} prefetch={false}>
+              <Avatar>
+                <AvatarImage src={session?.user?.image || ""} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </Link>
+          </>
         ) : (
           <Button
             variant="ghost"
@@ -46,12 +47,6 @@ export default async function Navbar() {
             Login
           </Button>
         )}
-        <Link href={`/profile/${userid}`} prefetch={false}>
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </Link>
       </div>
     </div>
   );

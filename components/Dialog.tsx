@@ -34,10 +34,10 @@ export function DialogButton() {
             <Button variant="destructive">Cancel</Button>
           </DialogClose>
           <Button
-            variant="secondary"
+            variant="outline"
             onClick={async () => {
               "use server";
-              await signOut();
+              await signOut({ redirectTo: "/" });
             }}
           >
             Yes
