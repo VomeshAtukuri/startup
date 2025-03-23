@@ -4,6 +4,7 @@ import PitchCard from "@/components/PitchCard";
 import Image from "next/image";
 import { CategorySelect } from "@/components/CategorySelect";
 import { useEffect, useState } from "react";
+import SkeletonPitchCard from "@/components/PitchCardSkeleton";
 interface Pitch {
   id: string;
   title: string;
@@ -19,12 +20,15 @@ interface Pitch {
 export default function Home() {
   const [category, setCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState<Pitch[]>([]);
   useEffect(() => {
     const fetchPitches = async () => {
       const result = await fetch("/api/pitch");
       const data = await result.json();
       setData(data);
+      setLoading(false);
     };
     fetchPitches();
   }, []);
@@ -65,11 +69,20 @@ export default function Home() {
             <CategorySelect category={category} setCategory={setCategory} />
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-x-0 gap-y-5 md:grid-cols-2 lg:grid-cols-4">
-          {Pitches.map((pitch: Pitch, id: number) => (
-            <PitchCard pitch={pitch} key={id} />
-          ))}
-        </div>
+
+        {loading ? (
+          <div className="grid grid-cols-1 gap-x-0 gap-y-5 md:grid-cols-2 lg:grid-cols-4">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((x: number, id: number) => (
+              <SkeletonPitchCard key={id} />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-x-0 gap-y-5 md:grid-cols-2 lg:grid-cols-4">
+            {Pitches.map((pitch: Pitch, id: number) => (
+              <PitchCard pitch={pitch} key={id} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

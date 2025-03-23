@@ -70,7 +70,7 @@ export default async function Profile({
             {data.pitches.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[80px] gap-y-4">
                 {data.pitches.map((pitch: Pitch, index: string) => (
-                    <PitchCard pitch={{ ...pitch, propic: data.image }} />
+                    <PitchCard pitch={{ ...pitch, propic: data.image }} key={index} />
                 ))}
               </div>
             ) : (
