@@ -3,12 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: { 
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ]
+    domains: ["indigo-adverse-kite-838.mypinata.cloud","avatars.githubusercontent.com"],
   },
 };
 

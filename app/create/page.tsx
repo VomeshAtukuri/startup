@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+// import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ interface FormData {
   title: string;
   description: string;
   category: string;
-  link: string;
+  link: File | null;
   pitch: string;
 }
 
@@ -24,57 +24,68 @@ export default function Create() {
     title: "",
     description: "",
     category: "",
-    link: "",
+    link: null,
     pitch: "",
   });
 
-  if (status === "unauthenticated") {
-    return redirect(`/api/auth/signin?callbackUrl=/create`);
-  }
+  // if (status === "unauthenticated") {
+  //   return redirect(`/api/auth/signin?callbackUrl=/create`);
+  // }
+
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const target = e.target as HTMLInputElement;
+    setFormData({
+      ...formData,
+      [target.name]: target.type === "file" ? target.files?.[0] : target.value,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("formdata", formData);
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("category", formData.category);
+    if (formData.link) {
+      formDataToSend.append("link", formData.link);
+    }
+    formDataToSend.append("pitch", formData.pitch);
     const response = await fetch("/api/pitch", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
+      body: formDataToSend,
     });
+    console.log("response sent");
     const data = await response.json();
     toast.success(data.message);
     setFormData({
       title: "",
       description: "",
       category: "",
-      link: "",
+      link: null,
       pitch: "",
     });
+    (document.querySelector('input[type="file"]') as HTMLInputElement).value = "";
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen max-w-screen bg-red-500">
       <div
         className="w-full h-60 flex justify-center items-center"
-        style={{ backgroundImage: "url('/HomeBg.png')" }}
+        // style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
-        <Image
+        {/* <Image
           src="/Frame 74.png"
           alt="Logo"
           width={350}
           height={45}
           className="object-contain"
           priority
-        />
+        /> */}
       </div>
 
-      <div className="container max-w-xl mx-auto px-4 py-12">
+      <div className="max-w-md mx-auto px-4 py-12">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <Label
@@ -139,9 +150,8 @@ export default function Create() {
               Image link
             </Label>
             <Input
-              type="text"
+              type="file"
               id="link"
-              value={formData.link}
               name="link"
               onChange={handleChange}
               placeholder="Paste a link to your demo or promotional media"
@@ -159,16 +169,19 @@ export default function Create() {
             </Label>
             <Textarea
               onChange={handleChange}
-              value={formData.pitch}
               id="pitch"
               name="pitch"
+              value={formData.pitch}
               placeholder="Briefly describe your idea and what problem it solves"
               className="rounded-xl min-h-[200px]"
               required
             />
           </div>
 
-          <Button  type="submit" className="w-full rounded-3xl h-12 mt-6 border-[3px] border-black dark:border-white bg-[#EE2B69] hover:bg-[#EE2B69]">
+          <Button
+            type="submit"
+            className="w-full rounded-3xl h-12 mt-6 border-[3px] border-black dark:border-white bg-[#EE2B69] hover:bg-[#EE2B69]"
+          >
             Submit Your Pitch <Send className="ml-2" />
           </Button>
         </form>
@@ -176,3 +189,4 @@ export default function Create() {
     </div>
   );
 }
+

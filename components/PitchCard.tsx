@@ -79,7 +79,7 @@ export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
           alt="Pitch Image"
           width={400}
           height={200}
-          className="w-full h-40 rounded-3xl object-cover border-black-500 border-2"
+          className="w-full h-40 rounded-3xl object-cover"
         />
       </CardContent>
 

@@ -8,7 +8,7 @@ export default async function Navbar() {
   const session = await auth();
   const userid = session?.user?.id;
   return (
-    <div className="w-full h-[50px] justify-between items-center p-8 flex">
+    <div className="max-w-screen h-[50px] justify-between items-center p-8 flex">
       <Link className="text-2xl font-bold" href="/" prefetch={false}>
         {/* Home */}
         <span className="text-[#EF4444]">Pitch</span>
@@ -51,3 +51,4 @@ export default async function Navbar() {
     </div>
   );
 }
+

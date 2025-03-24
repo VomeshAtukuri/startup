@@ -1,10 +1,27 @@
 import { db } from "@/db";
 import { pitchesTable, users } from "@/db/schema";
 import { auth } from "@/auth";
-import { eq } from "drizzle-orm"
+import { eq } from "drizzle-orm";
+
 export async function POST(req: Request) {
   const session = await auth();
-  const { title, description, category, link, pitch } = await req.json();
+  const formData = await req.formData();
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const category = formData.get("category") as string;
+  const link = formData.get("link") as File;
+  const pitch = formData.get("pitch") as string;
+
+  const uploadFormData = new FormData();
+  uploadFormData.append("file", link, link.name);
+
+
+  const imagesrc = await fetch(`http://localhost:3000/api/files`, {
+    method: "POST",
+    body: uploadFormData,
+  });
+  const imagelink = await imagesrc.json();
+  console.log(">>>>>>><<<<<<<<", imagelink);
 
   if (!session?.user?.id) {
     return new Response(JSON.stringify({ message: "User Not Authenticated" }), {
@@ -16,7 +33,7 @@ export async function POST(req: Request) {
     title,
     description,
     category,
-    imagesrc: link,
+    imagesrc: imagelink,
     pitch,
     created: new Date(),
     views: 0,
@@ -38,9 +55,9 @@ export async function GET() {
       views: pitchesTable.views,
       name: users.name,
       propic: users.image,
-      userid: pitchesTable.userid
+      userid: pitchesTable.userid,
     })
     .from(pitchesTable)
     .innerJoin(users, eq(pitchesTable.userid, users.id));
-  return new Response(JSON.stringify(pitches))
+  return new Response(JSON.stringify(pitches));
 }

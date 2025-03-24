@@ -65,7 +65,7 @@ export default async function PitchDetails({
 
       <main className="max-w-3xl mx-auto px-4 py-8">
       <Image src={pitch.imagesrc} alt="Adrian Hajdin" width={1000} height={500}  className="mb-4"/>
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-8 p-2">
           <div className="flex items-center gap-4">
             <Avatar className="size-12">
               <AvatarImage src={pitch.image || "/placeholder.svg"} />
@@ -80,7 +80,7 @@ export default async function PitchDetails({
             {pitch.category}
           </Badge>
         </div>
-        <div className="mb-12">
+        <div className="mb-12 p-2">
           <h3 className="text-2xl font-bold mb-4">Pitch details</h3>
           <div className="space-y-4">
             <p className="text-gray-600">{pitch.pitch}</p>
