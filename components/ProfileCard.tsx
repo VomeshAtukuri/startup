@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Eye, Pen } from "lucide-react";
+import { getRandomBio } from "@/mockdata";
 interface ProfileComponentProps {
   name: string;
   image: string;
@@ -44,7 +45,7 @@ export default function ProfileCard({
           <h3 className="text-white text-xl font-bold">{`@${
             email.trim().split("@")[0]
           }`}</h3>
-          <p className="text-white text-lg opacity-90 mb-4">{25}</p>
+          <p className="text-white text-lg opacity-90 mb-4">{getRandomBio()}</p>
 
           <div className="w-full h-[1px] bg-white opacity-30 my-2"></div>
 

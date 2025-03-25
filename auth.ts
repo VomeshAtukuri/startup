@@ -8,9 +8,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [GitHub],
   callbacks: {
     async session({ session, user }) {
-      // Add the user ID to the session object
       session.user.id = user.id;
       return session;
     },
   },
+  trustHost: true,
 })

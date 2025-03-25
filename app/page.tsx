@@ -76,6 +76,10 @@ export default function Home() {
               <SkeletonPitchCard key={id} />
             ))}
           </div>
+        ) : Pitches.length === 0 ? (
+          <div className="flex justify-center items-center h-full">
+            <p className="text-lg text-gray-500">No pitches found.</p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 gap-x-0 gap-y-5 md:grid-cols-2 lg:grid-cols-4">
             {Pitches.map((pitch: Pitch, id: number) => (
