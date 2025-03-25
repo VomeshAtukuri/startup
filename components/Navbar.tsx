@@ -10,7 +10,6 @@ export default async function Navbar() {
   return (
     <div className="max-w-screen h-[50px] justify-between items-center p-8 flex">
       <Link className="text-2xl font-bold" href="/" prefetch={false}>
-        {/* Home */}
         <span className="text-[#EF4444]">Pitch</span>
         Startup
       </Link>

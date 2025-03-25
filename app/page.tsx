@@ -49,7 +49,7 @@ export default function Home() {
 
   return (
     <div className="w-full mx-auto h-screen">
-      {/* <div
+      <div
         className="w-full mx-auto justify-center items-center flex flex-col h-[350px] gap-4"
         style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
@@ -61,7 +61,7 @@ export default function Home() {
           Submit Ideas, Vote on Pitches, and Get Noticed in Virtual Competitions
         </p>
         <SearchBar setSearchTerm={setSearchTerm} />
-      </div> */}
+      </div>
       <div className="px-12 py-5 space-y-2 flex flex-col">
         <div className="flex justify-between mx-5 my-3">
           <p className=" text-lg md:text-xl font-bold ">Recommended Startups</p>

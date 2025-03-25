@@ -1,41 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Pitch Startup
 
-## Getting Started
+**Pitch Startup** is a platform where entrepreneurs, visionaries, and innovators can pitch their startup ideas to the world. Users can create, showcase, and review startup ideas, fostering a collaborative ecosystem for innovation. Whether you're looking for feedback, co-founders, or investors, Pitch Startup is the place to be!
 
-First, run the development server:
+## 🌟 Features
 
-```bash
+- ✅ **Pitch Your Idea** – Create and share your startup idea with the community.
+- 💬 **Community Reviews** – Other users can review, comment, and give constructive feedback on your pitch.
+- 📷 **Image Uploads** – Upload pitch-related images securely via **Pinata Server**.
+- 🔐 **Secure Authentication** – GitHub-based authentication powered by **NextAuth**.
+- 🎨 **Beautiful UI** – Elegant, accessible, and modern UI built with **shadcn/ui**.
+- 🚀 **Blazing Fast Performance** – Serverless architecture powered by **Neon PostgreSQL**.
+- 📊 **Data Persistence** – Robust database handling using **Drizzle ORM**.
+- 🔎 **Sleek Icons** – Enhanced UI using **lucide-react** icons.
+
+---
+
+## 🛠 Tech Stack
+
+| Technology       | Purpose |
+|-----------------|---------|
+| **Next.js**     | Full-stack framework for building the app |
+| **React.js**    | Frontend library for dynamic UI |
+| **Drizzle ORM** | Type-safe ORM for interacting with Neon PostgreSQL |
+| **Neon PostgreSQL** | Serverless database for efficient storage |
+| **shadcn/ui**   | Pre-built UI components for a modern look |
+| **NextAuth**    | Authentication system (GitHub provider) |
+| **Pinata Server** | Decentralized image storage |
+| **lucide-react** | Icon library for clean and modern UI |
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repository
+
+```sh
+git clone https://github.com/atukurivomesh/pitch-startup.git
+cd pitch-startup
+
+### 2️⃣ Install Dependencies
+
+```sh
+npm install
+# or
+yarn install
+
+### 3️⃣ Setup Environment Variables
+
+Create a .env.local file in the root directory and add the following:
+
+```sh
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_secret_key
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+DATABASE_URL=your_neon_database_url
+PINATA_API_KEY=your_pinata_api_key
+PINATA_SECRET_API_KEY=your_pinata_secret_key
+PINATA_JWT=your_pinata_jwt
+NEXT_PUBLIC_GATEWAY_URL=your_pinata_gateway_url
+
+### 4️⃣ Run the Development Server
+
+```sh
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## Tech Stack 
-Next Js 15
-Shadcn UI
-Drizzel ORM 
+Your app should now be running on http://localhost:3000 🚀.

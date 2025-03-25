@@ -1,5 +1,5 @@
 "use client";
-// import Image from "next/image";
+import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -28,9 +28,9 @@ export default function Create() {
     pitch: "",
   });
 
-  // if (status === "unauthenticated") {
-  //   return redirect(`/api/auth/signin?callbackUrl=/create`);
-  // }
+  if (status === "unauthenticated") {
+    return redirect(`/api/auth/signin?callbackUrl=/create`);
+  }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -70,22 +70,22 @@ export default function Create() {
   };
 
   return (
-    <div className="min-h-screen max-w-screen bg-red-500">
+    <div className="min-h-screen mx-auto">
       <div
         className="w-full h-60 flex justify-center items-center"
-        // style={{ backgroundImage: "url('/HomeBg.png')" }}
+        style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
-        {/* <Image
+        <Image
           src="/Frame 74.png"
           alt="Logo"
           width={350}
           height={45}
           className="object-contain"
           priority
-        /> */}
+        />
       </div>
 
-      <div className="max-w-md mx-auto px-4 py-12">
+      <div className="max-w-xl mx-auto px-4 py-12">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <Label
