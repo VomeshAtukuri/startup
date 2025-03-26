@@ -50,7 +50,7 @@ export default function Create() {
       method: "POST",
       body: formDataToSend,
     });
-    console.log("response sent");
+
     const data = await response.json();
     toast.success(data.message);
     setFormData({

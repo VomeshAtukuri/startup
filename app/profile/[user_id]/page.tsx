@@ -27,7 +27,7 @@ export default async function Profile({
 }) {
   
   const { user_id } = await params;
-  console.log(user_id);
+  
 
   const session = await auth();
   if (!session?.user?.id) {

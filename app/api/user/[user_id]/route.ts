@@ -18,6 +18,6 @@ export async function GET(
     views: pitchesTable.views
   }).from(pitchesTable).where(eq(pitchesTable.userid, user_id)); 
   const data = { ...userData[0], pitches };
-  // console.log(">>>>>>><<<<<<<<",data);
+  
   return new Response(JSON.stringify(data), { status: 200 });
 }

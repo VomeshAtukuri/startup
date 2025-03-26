@@ -16,12 +16,12 @@ export async function POST(req: Request) {
   uploadFormData.append("file", link, link.name);
 
 
-  const imagesrc = await fetch(`http://localhost:3000/api/files`, {
+  const imagesrc = await fetch(`${process.env.HOSTNAME}/api/files`, {
     method: "POST",
     body: uploadFormData,
   });
   const imagelink = await imagesrc.json();
-  console.log(">>>>>>><<<<<<<<", imagelink);
+ 
 
   if (!session?.user?.id) {
     return new Response(JSON.stringify({ message: "User Not Authenticated" }), {
