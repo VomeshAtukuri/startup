@@ -19,6 +19,7 @@ export function DialogButton() {
           variant="ghost"
           className="border-2 border-transparent hover:border-red-500 transition-all duration-200"
         >
+          <span className="sr-only">Logout</span>
           Logout
         </Button>
       </DialogTrigger>

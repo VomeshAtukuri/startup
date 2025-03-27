@@ -29,7 +29,7 @@ export default async function Navbar() {
             <DialogButton />
             <Link href={`/profile/${userid}`} prefetch={false}>
               <Avatar>
-                <AvatarImage src={session?.user?.image || ""} />
+                <AvatarImage src={session?.user?.image || ""} alt="Profile Picture"/>
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </Link>

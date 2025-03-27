@@ -25,9 +25,7 @@ export default async function Profile({
 }: {
   params: Promise<{ user_id: string }>;
 }) {
-  
   const { user_id } = await params;
-  
 
   const session = await auth();
   if (!session?.user?.id) {
@@ -40,7 +38,10 @@ export default async function Profile({
       throw new Error(`${res.status} ${res.statusText}`);
     }
     const data = await res.json();
-    const totalViews = data.pitches.reduce((sum: number, pitch: Pitch) => sum + pitch.views, 0);
+    const totalViews = data.pitches.reduce(
+      (sum: number, pitch: Pitch) => sum + pitch.views,
+      0
+    );
     return (
       <div className="mx-auto py-8 px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -59,9 +60,7 @@ export default async function Profile({
               <h2 className="text-2xl font-semibold tracking-tight">Pitches</h2>
               <p className="text-muted-foreground mt-1">
                 Browse through{" "}
-                <span className="font-medium text-pink-500">
-                  {data.name}
-                </span>
+                <span className="font-medium text-pink-500">{data.name}</span>
                 &#39;s pitches
               </p>
               <Separator className="my-4" />
@@ -70,7 +69,10 @@ export default async function Profile({
             {data.pitches.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[80px] gap-y-4">
                 {data.pitches.map((pitch: Pitch, index: string) => (
-                    <PitchCard pitch={{ ...pitch, propic: data.image }} key={index} />
+                  <PitchCard
+                    pitch={{ ...pitch, propic: data.image }}
+                    key={index}
+                  />
                 ))}
               </div>
             ) : (
@@ -80,9 +82,8 @@ export default async function Profile({
                   No pitches available
                 </p>
                 <Button className="mt-4" variant="outline" asChild>
-                  <Link href="/create">
-                  Create Your First Pitch
-                  </Link>
+                  <span className="sr-only">Retry</span>
+                  <Link href="/create">Create Your First Pitch</Link>
                 </Button>
               </div>
             )}
@@ -105,6 +106,7 @@ export default async function Profile({
             variant="destructive"
             onClick={() => window.location.reload()}
           >
+            <span className="sr-only">Retry</span>
             Retry
           </Button>
         </div>

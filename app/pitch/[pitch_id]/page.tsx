@@ -64,11 +64,11 @@ export default async function PitchDetails({
       </div>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
-      <Image src={pitch.imagesrc} alt={pitch.title} width={1000} height={500}  className="mb-4 object-cover"/>
+      <Image src={pitch.imagesrc} alt={pitch.title} width={1000} height={500}  className="mb-4 object-cover object-center"/>
         <div className="flex justify-between items-center mb-8 p-2">
           <div className="flex items-center gap-4">
             <Avatar className="size-12">
-              <AvatarImage src={pitch.image || "/placeholder.svg"} />
+              <AvatarImage src={pitch.image || "/placeholder.svg"} alt="Profile Picture" />
               <AvatarFallback></AvatarFallback>
             </Avatar>
             <div>

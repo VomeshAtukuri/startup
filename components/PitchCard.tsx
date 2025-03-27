@@ -59,7 +59,7 @@ export default function PitchCard({ pitch }: { pitch: PitchCardProps }) {
           </span>
           <Link href={`/profile/${pitch.userid}`} prefetch={false}>
             <Avatar className="size-10">
-              <AvatarImage src={pitch.propic} />
+              <AvatarImage src={pitch.propic} alt="Profile Picture"/>
               <AvatarFallback className="animate-pulse"></AvatarFallback>
             </Avatar>
           </Link>
