@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/sheet";
 import { MessageCircle } from "lucide-react";
 
-export function Discussions() {
+export function Discussions({ pitch_id , isAuthenticated}: { pitch_id: string , isAuthenticated: boolean}) {
+  console.log("Discussions",pitch_id, isAuthenticated);
   return (
     <Sheet>
       <SheetTrigger>
@@ -17,12 +18,18 @@ export function Discussions() {
       </SheetTrigger>
       <SheetContent side="right">
         <SheetHeader>
-          <SheetTitle>Are you absolutely sure?</SheetTitle>
+          <SheetTitle>Disscussions</SheetTitle>
           <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Share your thoughts on the startup.
           </SheetDescription>
         </SheetHeader>
+        <SheetDescription className="px-5 w-full h-full flex items-center justify-center">
+          <p className="text-lg font-semibold text-center text-red-600">
+            Coming soon
+            <span className="animate-pulse">.....
+            </span>
+          </p>
+        </SheetDescription>
       </SheetContent>
     </Sheet>
   );

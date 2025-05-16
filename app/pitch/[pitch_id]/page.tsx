@@ -21,7 +21,6 @@ export default async function PitchDetails({
   params: Promise<{ pitch_id: string }>;
 }) {
   const session = await auth();
-  console.log(session);
   const { pitch_id } = await params;
   const pitch = await db
     .select({
@@ -41,7 +40,7 @@ export default async function PitchDetails({
     .innerJoin(users, eq(pitchesTable.userid, users.id))
     .where(eq(pitchesTable.id, pitch_id))
     .then((res) => res[0]);
-
+    
   if (session?.user?.id !== pitch.userid) {
     await db
       .update(pitchesTable)
@@ -51,7 +50,7 @@ export default async function PitchDetails({
 
   return (
     <div className="min-h-screen">
-      {/* <div
+      <div
         className="py-12 px-4 relative"
         style={{ backgroundImage: "url('/HomeBg.png')" }}
       >
@@ -66,10 +65,10 @@ export default async function PitchDetails({
             {pitch.description}
           </p>
         </div>
-      </div> */}
+      </div>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
-        {/* <Image src={pitch.imagesrc} alt={pitch.title} width={1000} height={500}  className="mb-4 object-cover object-center"/> */}
+        <Image src={pitch.imagesrc} alt={pitch.title} width={1000} height={500}  className="mb-4 object-cover object-center"/>
         <div className="flex justify-between items-center mb-8 p-2">
           <div className="flex items-center gap-4">
             <Avatar className="size-12">
@@ -91,12 +90,12 @@ export default async function PitchDetails({
             <Badge className="text-xs rounded-4xl">{pitch.category}</Badge>
         </div>
         <div className="mb-12 p-2">
-          <div className="flex justify-between">
+          <div className="flex justify-between items-baseline">
             <h3 className="text-2xl font-bold mb-4">Pitch details</h3>
-            <InteractionButton pitch_id={pitch_id} />
+            <InteractionButton user_id={session?.user?.id || "guest"} pitch_id={pitch_id} />
           </div>
           <div className="space-y-4">
-            <p className="text-gray-600">{pitch.pitch}</p>
+            <p className="text-gray-600 dark:text-white">{pitch.pitch}</p>
           </div>
         </div>
       </main>

@@ -1,59 +1,135 @@
+// Resaon for not using useSession() directly
+// You noticed useSession() updates slowly after login/logout because it uses a cached 
+// React context and fetches session info via an API route.
+// Server-side auth like auth() is always fresh because it reads cookies directly on each request.
+
 "use client";
 import { ThumbsUp, ThumbsDown, Bookmark } from "lucide-react";
 import { Discussions } from "./Discussions";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-export function InteractionButton({ pitch_id }: { pitch_id: string }) {
-  const { data: session, status } = useSession();
-  console.log(session);
-  console.log(status);
-  const [likes, setLikes] = useState(0);
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
+export function InteractionButton({
+  pitch_id,
+  user_id,
+}: {
+  pitch_id: string;
+  user_id: string;
+}) {
+  const [likes, setLikes] = useState(99);
   const [dislikes, setDislikes] = useState(0);
-  const [action, setAction] = useState(false);
+  const [action, setAction] = useState("");
   const [save, setSave] = useState(false);
-  function handleClick({ like }: { like: boolean }) {
-    if (status === "unauthenticated") return;
-    if (action) return;
-    if (like) {
-      setLikes(likes + 1);
+  
+  const isAuthenticated = user_id !== "guest";
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      async function fetchData() {
+        const res = await fetch(
+          `/api/interaction?pitch_id=${pitch_id}&user_id=${user_id}`
+        );
+        const data = await res.json();
+        setSave(data[0]?.bookmarked || false);
+      }
+      fetchData();
     } else {
-      setDislikes(dislikes + 1);
+      setSave(false);
     }
-    setAction(true);
+  }, [pitch_id, user_id, isAuthenticated]);
+
+  //Likes function
+  function handleClick({ like }: { like: boolean }) {
+    if (!isAuthenticated) {
+      toast.info("You must be logged in to interact with a pitch");
+      return;
+    }
+    if (like) {
+      setLikes((prev) => prev + 1);
+      setAction("like");
+    } else {
+      setDislikes((prev) => prev + 1);
+      setAction("dislike");
+    }
   }
+
+  //Bookmark function
+  async function handleSave() {
+    if (!isAuthenticated) {
+      toast.info("You must be logged in to save a pitch");
+      return;
+    }
+
+    const body = {
+      pitch_id,
+      user_id,
+      remove: save,
+      type: "bookmark",
+    };
+
+    const response = await fetch("/api/bookmark", {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      toast[save ? "error" : "success"](data.message);
+      setSave(!save);
+    }
+  }
+
   return (
-    <div className="flex items-center gap-4">
-      <Discussions />
-      <div className="cursor-pointer" onClick={() => setSave(!save)}>
+    <div className="flex items-center gap-4 justify-baseline">
+      <Discussions pitch_id={pitch_id} isAuthenticated={isAuthenticated} />
+
+      <div
+        className={`cursor-pointer ${
+          !isAuthenticated ? "opacity-50 cursor-not-allowed" : ""
+        }`}
+        onClick={isAuthenticated ? handleSave : () => toast.info("You must be logged in to save a pitch")}
+      >
         {save ? (
           <Bookmark size={20} strokeWidth={1.5} fill="#EF4444" />
         ) : (
-          <Bookmark className="w-5 h-5" />
+          <Bookmark size={20} />
         )}
       </div>
+
       <div
-        className={`flex items-center gap-1 ${
-          action || status === "unauthenticated"
-            ? "cursor-not-allowed opacity-80"
-            : "cursor-pointer"
+        className={`flex items-center gap-1 cursor-pointer ${
+          !isAuthenticated ? "opacity-50 cursor-not-allowed" : ""
         }`}
-        onClick={() => handleClick({ like: true })}
+        onClick={() =>
+          isAuthenticated
+            ? handleClick({ like: true })
+            : toast.info("You must be logged in to like a pitch")
+        }
       >
-        <ThumbsUp className={`${action ? "text-[#EF4444]" : ""}`} size={20} />
-        <p className="text-xs">{likes}</p>
+        <ThumbsUp
+          className={`${action === "like" ? "text-[#EF4444]" : ""}`}
+          size={20}
+        />
+        {action === "like" && <p className="text-xs">{likes}</p>}
       </div>
+
       <div
-        className={`flex items-center gap-1 ${
-          action || status === "unauthenticated"
-            ? "cursor-not-allowed opacity-80"
-            : "cursor-pointer"
+        className={`flex items-center gap-1 cursor-pointer ${
+          !isAuthenticated ? "opacity-50 cursor-not-allowed" : ""
         }`}
-        onClick={() => handleClick({ like: false })}
+        onClick={() =>
+          isAuthenticated
+            ? handleClick({ like: false })
+            : toast.info("You must be logged in to dislike a pitch")
+        }
       >
-        <ThumbsDown size={20} />
-        <p className="text-xs">{dislikes}</p>
+        <ThumbsDown
+          className={`${action === "dislike" ? "text-[#EF4444]" : ""}`}
+          size={20}
+        />
+        {action === "dislike" && <p className="text-xs">{dislikes}</p>}
       </div>
     </div>
   );
 }
-

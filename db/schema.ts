@@ -1,5 +1,5 @@
 import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { boolean, primaryKey } from "drizzle-orm/pg-core";
+import { boolean, primaryKey, unique } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 
 export const users = pgTable("user", {
@@ -101,3 +101,20 @@ export const pitchesTable = pgTable("pitches", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
 });
+
+export const pitchInteractions = pgTable(
+  'pitch_interactions',
+  {
+    id: text().primaryKey().$defaultFn(() => crypto.randomUUID()),
+    userId: text().notNull().references(() => users.id, { onDelete: 'cascade' }),
+    pitchId: text().notNull().references(() => pitchesTable.id, { onDelete: 'cascade' }),
+    liked: boolean().default(false),
+    disliked: boolean().default(false),
+    bookmarked: boolean().default(false),
+    createdAt: timestamp().defaultNow(),
+  },
+  // restrict user to one interaction per pitch and one interaction per user
+  (pitchInteractions) => [
+    unique('user_pitch_unique').on(pitchInteractions.userId, pitchInteractions.pitchId),
+  ]
+);

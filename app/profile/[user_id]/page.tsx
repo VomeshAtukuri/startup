@@ -1,10 +1,8 @@
-import { redirect } from "next/navigation";
 import ProfileCard from "@/components/ProfileCard";
 import PitchCard from "@/components/PitchCard";
 import { Separator } from "@/components/ui/separator";
 import { AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { auth } from "@/auth";
 import Link from "next/link";
 interface Pitch {
   id: string;
@@ -26,11 +24,6 @@ export default async function Profile({
   params: Promise<{ user_id: string }>;
 }) {
   const { user_id } = await params;
-
-  const session = await auth();
-  if (!session?.user?.id) {
-    return redirect(`/api/auth/signin`);
-  }
 
   try {
     const res = await fetch(`${process.env.HOSTNAME}/api/user/${user_id}`);
@@ -60,7 +53,7 @@ export default async function Profile({
               <h2 className="text-2xl font-semibold tracking-tight">Pitches</h2>
               <p className="text-muted-foreground mt-1">
                 Browse through{" "}
-                <span className="font-medium text-pink-500">{data.name}</span>
+                <span className="font-medium text-[#EF4444]">{data.name}</span>
                 &#39;s pitches
               </p>
               <Separator className="my-4" />

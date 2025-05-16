@@ -3,6 +3,7 @@ import { pitchesTable, users } from "@/db/schema";
 import { auth } from "@/auth";
 import { eq } from "drizzle-orm";
 
+//POST call for creating a Pitch
 export async function POST(req: Request) {
   const session = await auth();
   const formData = await req.formData();
@@ -43,6 +44,7 @@ export async function POST(req: Request) {
   return new Response(JSON.stringify({ message: "Pitch Successfully added" }));
 }
 
+//GET call for all Pitches
 export async function GET() {
   const pitches = await db
     .select({
@@ -60,4 +62,17 @@ export async function GET() {
     .from(pitchesTable)
     .innerJoin(users, eq(pitchesTable.userid, users.id));
   return new Response(JSON.stringify(pitches));
+}
+
+//DELETE call for deleting a Pitch
+export async function DELETE(req: Request) {
+  const session = await auth();
+  const { pitch_id } = await req.json();
+  if (!session?.user?.id) {
+    return new Response(JSON.stringify({ message: "User Not Authenticated" }), {
+      status: 401,
+    });
+  }
+  await db.delete(pitchesTable).where(eq(pitchesTable.id, pitch_id));
+  return new Response(JSON.stringify({ message: "Pitch Successfully deleted" }));
 }

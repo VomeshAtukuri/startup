@@ -8,16 +8,18 @@ export async function GET(
 ) {
   const { user_id } = await params;
   const userData = await db.select().from(users).where(eq(users.id, user_id));
-  const pitches = await db.select({
-    id: pitchesTable.id,
-    title: pitchesTable.title,
-    description: pitchesTable.description,
-    category: pitchesTable.category,
-    imagesrc: pitchesTable.imagesrc,
-    created: pitchesTable.created,
-    views: pitchesTable.views
-  }).from(pitchesTable).where(eq(pitchesTable.userid, user_id)); 
+  const pitches = await db
+    .select({
+      id: pitchesTable.id,
+      title: pitchesTable.title,
+      description: pitchesTable.description,
+      category: pitchesTable.category,
+      imagesrc: pitchesTable.imagesrc,
+      created: pitchesTable.created,
+      views: pitchesTable.views,
+    })
+    .from(pitchesTable)
+    .where(eq(pitchesTable.userid, user_id));
   const data = { ...userData[0], pitches };
-  
   return new Response(JSON.stringify(data), { status: 200 });
 }

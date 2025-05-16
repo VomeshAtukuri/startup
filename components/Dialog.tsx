@@ -39,6 +39,7 @@ export function DialogButton() {
             onClick={async () => {
               "use server";
               await signOut({ redirectTo: "/" });
+              // await signOut();
             }}
           >
             Yes
