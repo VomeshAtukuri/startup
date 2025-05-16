@@ -40,7 +40,7 @@ export default async function PitchDetails({
     .innerJoin(users, eq(pitchesTable.userid, users.id))
     .where(eq(pitchesTable.id, pitch_id))
     .then((res) => res[0]);
-    
+
   if (session?.user?.id !== pitch.userid) {
     await db
       .update(pitchesTable)
@@ -68,7 +68,15 @@ export default async function PitchDetails({
       </div>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
-        <Image src={pitch.imagesrc} alt={pitch.title} width={1000} height={500}  className="mb-4 object-cover object-center"/>
+        <div className="relative w-full aspect-[2/1] mb-4 overflow-hidden rounded-lg">
+          <Image
+            src={pitch.imagesrc}
+            alt={pitch.title}
+            fill
+            className="object-cover object-center"
+          />
+        </div>
+
         <div className="flex justify-between items-center mb-8 p-2">
           <div className="flex items-center gap-4">
             <Avatar className="size-12">
@@ -87,12 +95,15 @@ export default async function PitchDetails({
               </p>
             </div>
           </div>
-            <Badge className="text-xs rounded-4xl">{pitch.category}</Badge>
+          <Badge className="text-xs rounded-4xl">{pitch.category}</Badge>
         </div>
         <div className="mb-12 p-2">
           <div className="flex justify-between items-baseline">
             <h3 className="text-2xl font-bold mb-4">Pitch details</h3>
-            <InteractionButton user_id={session?.user?.id || "guest"} pitch_id={pitch_id} />
+            <InteractionButton
+              user_id={session?.user?.id || "guest"}
+              pitch_id={pitch_id}
+            />
           </div>
           <div className="space-y-4">
             <p className="text-gray-600 dark:text-white">{pitch.pitch}</p>
