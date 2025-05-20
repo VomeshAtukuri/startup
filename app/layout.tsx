@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react"
-// import { Dialogtologin } from "@/components/Dialogtologin";
+import { Dialogtologin } from "@/components/Dialogtologin";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -40,7 +40,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Navbar />
-            {/* <Dialogtologin /> */}
+            <Dialogtologin />
             {children}
             <Analytics />
           </ThemeProvider>

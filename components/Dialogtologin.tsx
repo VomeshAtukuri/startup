@@ -16,9 +16,14 @@ export function Dialogtologin() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
+  function handleClick(){
+    router.push("/api/auth/signin")
+    setOpen(false)
+  }
+
   useEffect(() => {
     if (status === "unauthenticated") {
-      const timer = setTimeout(() => setOpen(true), 1000);
+      const timer = setTimeout(() => setOpen(true), 30000);
       return () => clearTimeout(timer);
     }
   }, [status]);
@@ -29,12 +34,12 @@ export function Dialogtologin() {
         <DialogHeader>
           <DialogTitle>Log In</DialogTitle>
           <p className="text-sm text-muted-foreground">
-            You &apos;re currently not logged in. Some features might be unavailable. Please log in for full access.
+            You&apos;re currently not logged in. Some features might be unavailable. Please log in for full access.
           </p>
         </DialogHeader>
         <DialogFooter>
           <Button
-            onClick={() => router.push("/api/auth/signin")}
+            onClick={handleClick}
             className="bg-[#EF4444]"
             variant={"ghost"}
           >

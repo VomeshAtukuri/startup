@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     .select()
     .from(pitchInteractions)
     .where(condition)
-    .then((res: any[]) => res[0]);
+    .then((res) => res[0]);
 
   if (existingInteraction) {
     let { liked, disliked } = existingInteraction;
