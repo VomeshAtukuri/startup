@@ -23,7 +23,7 @@ export function Dialogtologin() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      const timer = setTimeout(() => setOpen(true), 30000);
+      const timer = setTimeout(() => setOpen(true), 60000); // 60000 milliseconds = 1 minute
       return () => clearTimeout(timer);
     }
   }, [status]);
