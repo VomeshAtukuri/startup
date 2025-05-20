@@ -4,9 +4,9 @@ import { pitchInteractions,pitchesTable, users } from "@/db/schema";
 
 export async function POST(request: Request) {
   const { type, pitch_id, user_id, remove } = await request.json();
-  // const { pitch_id, user_id, remove } = await request.json();
-  console.log("Data Received", pitch_id, user_id, remove);
-  console.log("Type Received", type);
+  
+  // console.log("Data Received", pitch_id, user_id, remove);
+  
   switch (type) {
     //To mark a pitch as bookmark and unbookmark
     case "bookmark":
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
 }
 
 async function handleSave(pitch_id: string, user_id: string, remove: boolean) {
-  console.log("Data Received", pitch_id, user_id, remove);
+  // console.log("Data Received", pitch_id, user_id, remove);
   if(!pitch_id || !user_id) return new Response(JSON.stringify({ message: "Missing Pitch ID or User ID" }), { status: 400 });
   const condition1 = eq(pitchInteractions.pitchId, pitch_id);
   const condition2 = eq(pitchInteractions.userId, user_id);
@@ -89,7 +89,7 @@ async function getbookmarkedPitches(user_id: string) {
     .where(and(condition1, condition2));
   
   if(!bookmarkedPitches.length) return new Response(JSON.stringify({ message: "No Bookmarked Pitches" }), { status: 200 });
-  console.log("Bookmarked Pitches", bookmarkedPitches);
+  // console.log("Bookmarked Pitches", bookmarkedPitches);
 
   return new Response(JSON.stringify(bookmarkedPitches), { status: 200 });
 }

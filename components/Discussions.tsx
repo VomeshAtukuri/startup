@@ -14,7 +14,7 @@ export function Discussions({ pitch_id , isAuthenticated}: { pitch_id: string , 
   return (
     <Sheet>
       <SheetTrigger>
-        <MessageCircle size={20}/>
+        <MessageCircle size={20} className="cursor-pointer"/>
       </SheetTrigger>
       <SheetContent side="right">
         <SheetHeader>

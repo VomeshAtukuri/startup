@@ -1,5 +1,5 @@
 // Resaon for not using useSession() directly
-// You noticed useSession() updates slowly after login/logout because it uses a cached 
+// You noticed useSession() updates slowly after login/logout because it uses a cached
 // React context and fetches session info via an API route.
 // Server-side auth like auth() is always fresh because it reads cookies directly on each request.
 
@@ -16,11 +16,13 @@ export function InteractionButton({
   pitch_id: string;
   user_id: string;
 }) {
-  const [likes, setLikes] = useState(99);
-  const [dislikes, setDislikes] = useState(0);
+  const [likes, setLikes] = useState(false);
+  const [dislikes, setDislikes] = useState(false);
   const [action, setAction] = useState("");
   const [save, setSave] = useState(false);
-  
+  const [likesCount, setLikesCount] = useState(0);
+  const [dislikesCount, setDislikesCount] = useState(0);
+
   const isAuthenticated = user_id !== "guest";
 
   useEffect(() => {
@@ -30,30 +32,74 @@ export function InteractionButton({
           `/api/interaction?pitch_id=${pitch_id}&user_id=${user_id}`
         );
         const data = await res.json();
-        setSave(data[0]?.bookmarked || false);
+        setSave(data?.bookmarked || false);
+        setLikes(data?.liked || false);
+        setDislikes(data?.disliked || false);
+        setLikesCount(data?.likes || 0);
+        setDislikesCount(data?.dislikes || 0);
+        if (data?.liked) setAction("like");
+        if (data?.disliked) setAction("dislike");
       }
       fetchData();
     } else {
       setSave(false);
+      setLikes(false);
+      setDislikes(false);
+      setLikesCount(0);
+      setDislikesCount(0);
     }
   }, [pitch_id, user_id, isAuthenticated]);
 
-  //Likes function
-  function handleClick({ like }: { like: boolean }) {
+  async function handleClick({ like }: { like: boolean }) {
     if (!isAuthenticated) {
       toast.info("You must be logged in to interact with a pitch");
       return;
     }
-    if (like) {
-      setLikes((prev) => prev + 1);
-      setAction("like");
+
+    const type = like ? "like" : "dislike";
+    const isSameAction = action === type;
+
+    const body = {
+      pitch_id,
+      user_id,
+      type,
+    };
+
+    const response = await fetch("/api/likes", {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      if (isSameAction) {
+        // Undo current action
+        if (like) setLikesCount((prev) => prev - 1);
+        else setDislikesCount((prev) => prev - 1);
+
+        setLikes(false);
+        setDislikes(false);
+        setAction("");
+      } else {
+        // Adjust counts
+        if (like) {
+          setLikesCount((prev) => prev + 1);
+          if (dislikes) setDislikesCount((prev) => prev - 1);
+        } else {
+          setDislikesCount((prev) => prev + 1);
+          if (likes) setLikesCount((prev) => prev - 1);
+        }
+
+        setLikes(like);
+        setDislikes(!like);
+        setAction(type);
+      }
     } else {
-      setDislikes((prev) => prev + 1);
-      setAction("dislike");
+      toast.error(data.message || "Something went wrong!");
     }
   }
 
-  //Bookmark function
   async function handleSave() {
     if (!isAuthenticated) {
       toast.info("You must be logged in to save a pitch");
@@ -77,6 +123,8 @@ export function InteractionButton({
     if (response.ok) {
       toast[save ? "error" : "success"](data.message);
       setSave(!save);
+    } else {
+      toast.error(data.message || "Something went wrong!");
     }
   }
 
@@ -88,13 +136,17 @@ export function InteractionButton({
         className={`cursor-pointer ${
           !isAuthenticated ? "opacity-50 cursor-not-allowed" : ""
         }`}
-        onClick={isAuthenticated ? handleSave : () => toast.info("You must be logged in to save a pitch")}
+        onClick={
+          isAuthenticated
+            ? handleSave
+            : () => toast.info("You must be logged in to save a pitch")
+        }
       >
-        {save ? (
-          <Bookmark size={20} strokeWidth={1.5} fill="#EF4444" />
-        ) : (
-          <Bookmark size={20} />
-        )}
+        <Bookmark
+          size={20}
+          strokeWidth={1.5}
+          fill={save ? "#EF4444" : "none"}
+        />
       </div>
 
       <div
@@ -108,10 +160,10 @@ export function InteractionButton({
         }
       >
         <ThumbsUp
-          className={`${action === "like" ? "text-[#EF4444]" : ""}`}
+          className={action === "like" ? "text-[#EF4444]" : ""}
           size={20}
         />
-        {action === "like" && <p className="text-xs">{likes}</p>}
+        <p className="text-xs">{likesCount}</p>
       </div>
 
       <div
@@ -125,10 +177,10 @@ export function InteractionButton({
         }
       >
         <ThumbsDown
-          className={`${action === "dislike" ? "text-[#EF4444]" : ""}`}
+          className={action === "dislike" ? "text-[#EF4444]" : ""}
           size={20}
         />
-        {action === "dislike" && <p className="text-xs">{dislikes}</p>}
+        <p className="text-xs">{dislikesCount}</p>
       </div>
     </div>
   );
