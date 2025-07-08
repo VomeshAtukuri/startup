@@ -19,8 +19,29 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Pitch Startup",
-  description: "Pitch,Vote & Grow Startup",
+  description: "Pitch, Vote & Grow Startup",
+  keywords: ["startup", "pitch", "vote", "entrepreneurship", "investors"],
+  authors: [{ name: "Pitch Startup Team", url: "https://pitchstartupav.vercel.app" }],
+  metadataBase: new URL("https://pitchstartupav.vercel.app"),
+
+  openGraph: {
+    title: "Pitch Startup",
+    description: "Pitch, Vote & Grow Startup",
+    url: "https://pitchstartupav.vercel.app",
+    siteName: "Pitch Startup",
+    images: [
+      {
+        url: "/og-image.jpg", // Place this image in your /public folder
+        width: 1200,
+        height: 630,
+        alt: "Pitch Startup Open Graph Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
+
 
 export default function RootLayout({
   children,
@@ -30,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
         <SessionProvider>
           <ThemeProvider

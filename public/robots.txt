@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://pitchstartupav.vercel.app
+
+# Sitemaps
+Sitemap: https://pitchstartupav.vercel.app/sitemap.xml

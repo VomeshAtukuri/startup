@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.8.0",
@@ -26,6 +27,7 @@
     "lucide-react": "^0.477.0",
     "next": "15.2.0",
     "next-auth": "^5.0.0-beta.25",
+    "next-sitemap": "^4.2.3",
     "next-themes": "^0.4.6",
     "pinata": "^2.1.0",
     "react": "^19.0.0",
