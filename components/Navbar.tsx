@@ -15,21 +15,35 @@ export default async function Navbar() {
       </Link>
       <div className="flex space-x-2">
         <ModeToggle />
-        <Button
-          variant="ghost"
-          className="border-2 border-transparent hover:border-red-500 transition-all duration-200"
-          asChild
-        >
-          <Link href="/create" prefetch={false}>
-            Create
-          </Link>
-        </Button>
+        <div className="relative inline-block">
+          <span
+            className="absolute top-[-4px] right-[-4px] w-3 h-3 border border-white rounded-full bg-red-500 animate-ping"
+            aria-hidden="true"
+          ></span>
+          <Button
+            variant="outline"
+            className="border-2 border-red-400 hover:border-red-500 transition-all duration-200"
+            asChild
+          >
+            <Link href="/create" prefetch={false}>
+              Create
+            </Link>
+          </Button>
+          <span
+            className="absolute top-[-4px] right-[-4px] w-3 h-3 border border-white rounded-full bg-red-500"
+            aria-hidden="true"
+          ></span>
+        </div>
+
         {session ? (
           <>
             <DialogButton />
             <Link href={`/profile/${userid}`} prefetch={false}>
               <Avatar>
-                <AvatarImage src={session?.user?.image || ""} alt="Profile Picture"/>
+                <AvatarImage
+                  src={session?.user?.image || ""}
+                  alt="Profile Picture"
+                />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </Link>
@@ -50,4 +64,3 @@ export default async function Navbar() {
     </div>
   );
 }
-
